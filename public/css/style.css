@@ -1,20 +1,44 @@
+body {
+    background-color: peachpuff;
+}
+
+div.header {
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+}
+
 li {
     padding: 5px;
     margin: 5px;
     background: #faebd7;
-  }
-  
-  .label {
+}
+
+.label {
     font-weight: bold;
-  }
-  
-  .create-update-form {
+}
+
+.create-update-form {
     padding: 5px;
     margin: 5px;
     background: aqua;
-  }
-  
-  .form-group {
+}
+
+.form-group {
     margin-bottom: 5px;
-  }
-  
+}
+
+.row {
+    clear: both
+}
+
+.column {
+    width: 50%;
+    float: left;
+}
+
+#top {
+    text-align: center;
+}
