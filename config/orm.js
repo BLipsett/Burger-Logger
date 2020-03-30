@@ -1,61 +1,103 @@
-let connection = require("./connection.js");
+let connection = require("../config/connection.js");
 
 // ORM
 // =============================================================
 
-let tableName = "burgers";
+//let tableName = "burgers";
+function printQuestionMarks(num) {
+    var arr = [];
+
+    for (var i = 0; i < num; i++) {
+        arr.push("?");
+    }
+
+    return arr.toString();
+}
+
+// Helper function to convert object key/value pairs to SQL syntax
+function objToSql(ob) {
+    var arr = [];
+
+    // loop through the keys and push the key/value as a string int arr
+    for (var key in ob) {
+        var value = ob[key];
+        // check to skip hidden properties
+        if (Object.hasOwnProperty.call(ob, key)) {
+            // if string with spaces, add quotations (Lana Del Grey => 'Lana Del Grey')
+            if (typeof value === "string" && value.indexOf(" ") >= 0) {
+                value = "'" + value + "'";
+            }
+            // e.g. {name: 'Lana Del Grey'} => ["name='Lana Del Grey'"]
+            // e.g. {sleepy: true} => ["sleepy=true"]
+            arr.push(key + "=" + value);
+        }
+    }
+
+    // translate array of strings to a single comma-separated string
+    return arr.toString();
+}
+
 
 let orm = {
 
-  // Here our ORM is creating a simple method for performing a query of the entire table.
-  // We make use of the callback to ensure that data is returned only once the query is done.
-  getBurgers: function(callback) {
-    let s = "SELECT * FROM " + tableName;
+    // Here our ORM is creating a simple method for performing a query of the entire table.
+    // We make use of the callback to ensure that data is returned only once the query is done.
+    all: function (tableName, callback) {
+        let s = "SELECT * FROM " + tableName + ";";
 
-    connection.query(s, function(err, result) {
+        connection.query(s, function (err, result) {
 
-      callback(result);
+            callback(result);
+            console.log(result)
+        });
+    },
 
-    });
-  },
+    // Here our ORM is creating a simple method for performing a query of a single character in the table.
+    // Again, we make use of the callback to grab a specific character from the database.
 
-  // Here our ORM is creating a simple method for performing a query of a single character in the table.
-  // Again, we make use of the callback to grab a specific character from the database.
+    delete: function (id, callback) {
 
-  deleteBurger: function(id, callback) {
+        let s = "DELETE FROM " + tableName + " WHERE id=?";
 
-    let s = "DELETE FROM " + tableName + " WHERE id=?";
+        connection.query(s, [id], function (err, result) {
 
-    connection.query(s, [id], function(err, result) {
+            callback(result);
+        });
 
-      callback(result);
-    });
+    },
 
-  },
+    create: function (table, cols, vals, cb) {
+        var queryString = "INSERT INTO " + table;
 
-  addBurger: function(burger, callback) {
-    let s = "INSERT INTO " + tableName + " (text, complete) VALUES (?,?)";
-    burger.complete = burger.complete || 0;
-    connection.query(s, [
-      burger.text, burger.complete
-    ], function(err, result) {
+        queryString += " (";
+        queryString += cols.toString();
+        queryString += ") ";
+        queryString += "VALUES (";
+        queryString += printQuestionMarks(vals.length);
+        queryString += ") ";
 
-      callback(result);
+        console.log(queryString);
 
-    });
-  },
+        connection.query(queryString, vals, function (err, result) {
+            if (err) {
+                throw err;
+            }
 
-  editBurger: function(burger, callback) {
-    let s = "UPDATE " + tableName + " SET text=? WHERE id=?";
+            cb(result);
+        });
+    },
 
-    connection.query(s, [
-      burger.text, burger.id
-    ], function(err, result) {
+    update: function (burger, callback) {
+        let s = "UPDATE " + tableName + " SET text=? WHERE id=?";
 
-      callback(result);
+        connection.query(s, [
+            burger.text, burger.id
+        ], function (err, result) {
 
-    });
-  }
+            callback(result);
+
+        });
+    }
 
 };
 
