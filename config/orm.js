@@ -55,7 +55,7 @@ let orm = {
     // Here our ORM is creating a simple method for performing a query of a single character in the table.
     // Again, we make use of the callback to grab a specific character from the database.
 
-    delete: function (id, callback) {
+    delete: function (tableName, id, callback) {
 
         let s = "DELETE FROM " + tableName + " WHERE id=?";
 
@@ -87,7 +87,7 @@ let orm = {
         });
     },
 
-    update: function (burger, callback) {
+    update: function (tableName, burger, callback) {
         let s = "UPDATE " + tableName + " SET text=? WHERE id=?";
 
         connection.query(s, [

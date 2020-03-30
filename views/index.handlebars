@@ -10,33 +10,44 @@
                 <input type="text" id="bur" name="name">
             </div>
         </div>
-        <div class="form-group">
-            <label for="devoured">devoured?</label><br>
-            <input type="radio" name="devoured" value="1" checked> Devoured!<br>
-            <input type="radio" name="devoured" value="0">Ready to Eat!
-        </div>
+       
 
         <button type="submit">Add Burger</button>
     </form>
 </div>
 
-<h2 id="top">Burgers ready to eat!</h2>
+
 <div class="row">
     <div class="column">
         <h2>Burgers Ready to Eat</h2>
         <ul>
             {{#each burgers}}
+            {{#unless devoured}}
             <li>
                 <p>Name: {{ burger_name }}</p>
+                <button class="change-dev" data-id="{{id}}" data-newdev="{{true}}">
+                    {{#if devoured}}Eat Me!{{else}}Devour!{{/if}}
+                </button>
+                <button class="delete-burger" data-id="{{this.id}}">DELETE!</button>
             </li>
+            {{/unless}}
             {{/each}}
         </ul>
+
     </div>
     <div class="column">
         <h2>Devoured Burgers!</h2>
         <ul>
             {{#each burgers}}
             {{#if devoured}}
+            <li>
+                <p>Name: {{ burger_name }}</p>
+                <button class="change-dev" data-id="{{id}}" data-newdev="{{devoured}}">
+                    {{#if devoured}}Eat Me!{{else}}Devour!{{/if}}
+                </button>
+                <button class="delete-burger" data-id="{{this.id}}">DELETE!</button>
+            </li>
+
             {{/if}}
             {{/each}}
         </ul>

@@ -1,13 +1,19 @@
+require('dotenv').config();
 let mysql = require("mysql");
 
 // we placed the connections in this source object
+
+
+
 let connection = mysql.createConnection({
 
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "",
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
     database: "eatdaburger"
+
+    
 });
 
 // we use source.[name of connection] to hook into mysql

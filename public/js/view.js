@@ -1,5 +1,5 @@
 $(function () {
-    $("change-dev").on("click", function (event) {
+    $(".change-dev").on("click", function (event) {
         let id = $(this).data("id");
         let newDev = $(this).data("newdev");
 
@@ -7,7 +7,7 @@ $(function () {
             devoured: newDev
         };
 
-        $.ajax("/api/burgers" + id, {
+        $.ajax("/api/burgers/" + id, {
             type: "PUT",
             data: newDevState
         }).then(
@@ -35,8 +35,22 @@ $(function () {
                 location.reload();
             }
         );
-
-        
     });
+
+    $(".delete-burger").on("click", function (event) {
+        let gone = $(this).data("id");
+
+        $.ajax("/api/burgers/", {
+            type: "DELETE",
+            data: gone
+        }).then(
+            function () {
+                console.log("deleted burger");
+                location.reload();
+            }
+        );
+
+    });
+
 });
 
