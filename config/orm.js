@@ -87,17 +87,36 @@ let orm = {
         });
     },
 
-    update: function (tableName, burger, callback) {
-        let s = "UPDATE " + tableName + " SET text=? WHERE id=?";
-
-        connection.query(s, [
-            burger.text, burger.id
-        ], function (err, result) {
-
-            callback(result);
-
+    update: function(table, objColVals, condition, cb) {
+        var queryString = "UPDATE " + table;
+    
+        queryString += " SET ";
+        queryString += objToSql(objColVals);
+        queryString += " WHERE ";
+        queryString += condition;
+    
+        console.log(queryString);
+        connection.query(queryString, function(err, result) {
+          if (err) {
+            throw err;
+          }
+    
+          cb(result);
         });
-    }
+      },
+      delete: function(table, condition, cb) {
+        var queryString = "DELETE FROM " + table;
+        queryString += " WHERE ";
+        queryString += condition;
+    
+        connection.query(queryString, function(err, result) {
+          if (err) {
+            throw err;
+          }
+    
+          cb(result);
+        });
+      }
 
 };
 

@@ -25,10 +25,10 @@
             {{#unless devoured}}
             <li>
                 <p>Name: {{ burger_name }}</p>
-                <button class="change-dev" data-id="{{id}}" data-newdev="{{true}}">
+                <button class="change-dev" data-id="{{ this.id }}" data-newdev="{{true}}">
                     {{#if devoured}}Eat Me!{{else}}Devour!{{/if}}
                 </button>
-                <button class="delete-burger" data-id="{{this.id}}">DELETE!</button>
+                <button class="delete-burger" data-id="{{ this.id }}">DELETE!</button>
             </li>
             {{/unless}}
             {{/each}}
@@ -42,8 +42,8 @@
             {{#if devoured}}
             <li>
                 <p>Name: {{ burger_name }}</p>
-                <button class="change-dev" data-id="{{id}}" data-newdev="{{devoured}}">
-                    {{#if devoured}}Eat Me!{{else}}Devour!{{/if}}
+                <button class="hungry-dev" data-id="{{this.id}}" data-newdev="{{devoured}}">
+                    {{#if devoured}}Nah not dat hungry{{else}}Devour!{{/if}}
                 </button>
                 <button class="delete-burger" data-id="{{this.id}}">DELETE!</button>
             </li>

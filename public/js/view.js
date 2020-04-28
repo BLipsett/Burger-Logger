@@ -4,7 +4,7 @@ $(function () {
         let newDev = $(this).data("newdev");
 
         let newDevState = {
-            devoured: true
+            devoured: 1
         };
 
         $.ajax("/api/burgers/" + id, {
@@ -39,8 +39,9 @@ $(function () {
 
     $(".delete-burger").on("click", function (event) {
         let gone = $(this).data("id");
+        let id = $(this).data("id");
 
-        $.ajax("/api/burgers/", {
+        $.ajax("/api/burgers/" + id, {
             type: "DELETE",
             data: gone
         }).then(
@@ -50,6 +51,25 @@ $(function () {
             }
         );
 
+    });
+
+    $(".hungry-dev").on("click", function (event) {
+        let id = $(this).data("id");
+        let newDev = $(this).data("newdev");
+
+        let newDevState = {
+            devoured: 0
+        };
+
+        $.ajax("/api/burgers/" + id, {
+            type: "PUT",
+            data: newDevState
+        }).then(
+            function () {
+                console.log("changed devoured");
+                location.reload();
+            }
+        );
     });
 
 });
