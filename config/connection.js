@@ -11,7 +11,15 @@ if (process.env.JAWSDB_URL) {
         port: process.env.DB_PORT,
         user: process.env.DB_USER,
         password: process.env.DB_PASS,
-        database: "eatdaburger"
+        database: "eatdaburger",
+        dialect: "mysql",
+    },
+    {
+    production: {
+      use_env_variable: "JAWSDB_URL",
+      dialect: "mysql",
+    
+    }
 });
 
 };
