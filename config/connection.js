@@ -5,17 +5,30 @@ let mysql = require("mysql");
 
 
 
-let connection = mysql.createConnection({
+// let connection = mysql.createConnection({
 
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: "w4i75a7f5k22uwgh"
+//     host: process.env.DB_HOST,
+//     port: process.env.DB_PORT,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASS,
+//     database: "w4i75a7f5k22uwgh"
     
 
     
+// });
+
+if (process.env.JAWSDB_URL) {
+    connection = mysql.createConnection(process.env.JAWSDB_URL);
+} else {
+    connection = mysql.createConnection({
+        host: process.env.DB_HOST,
+        // port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: "w4i75a7f5k22uwgh"
 });
+
+};
 
 // we use source.[name of connection] to hook into mysql
 //let connection = mysql.createConnection(source.localhost);
